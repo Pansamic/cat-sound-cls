@@ -1,0 +1,181 @@
+Neural Network Tools for STM32 family v1.7.0 (stm.ai v8.1.0-19520)
+Created date          : 2024-03-05 23:13:53
+Parameters            : generate --name cat_sound_cls -m /home/pansamic/Develop/Machine-Learning/cat-sound-classification-v1.1/cat_sound_classification_model.h5 --type keras --compression medium --verbosity 1 --workspace /tmp/mxAI_workspace456472392215774335176372330016430 --output /home/pansamic/.stm32cubemx/cat_sound_cls_output --allocate-inputs --series stm32f4 --allocate-outputs --split-weights
+
+Exec/report summary (generate)
+---------------------------------------------------------------------------------------------------------------------------------
+model file         :   /home/pansamic/Develop/Machine-Learning/cat-sound-classification-v1.1/cat_sound_classification_model.h5   
+type               :   keras                                                                                                     
+c_name             :   cat_sound_cls                                                                                             
+compression        :   medium                                                                                                    
+options            :   allocate-inputs, allocate-outputs, split-weights                                                          
+optimization       :   balanced                                                                                                  
+target/series      :   stm32f4                                                                                                   
+workspace dir      :   /tmp/mxAI_workspace456472392215774335176372330016430                                                      
+output dir         :   /home/pansamic/.stm32cubemx/cat_sound_cls_output                                                          
+model_fmt          :   float                                                                                                     
+model_name         :   cat_sound_classification_model                                                                            
+model_hash         :   6167406c05490561d2a46334ee2cb057                                                                          
+params #           :   700,042 items (2.67 MiB)                                                                                  
+---------------------------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_0' (domain:activations/**default**)                                                                
+                   :   2600 items, 10.16 KiB, ai_float, float, (1,2600)                                                          
+output 1/1         :   'dense_2' (domain:activations/**default**)                                                                
+                   :   10 items, 40 B, ai_float, float, (1,10)                                                                   
+macc               :   700,576                                                                                                   
+weights (ro)       :   356,008 B (347.66 KiB) (6 segments) / -2,444,160(-87.3%) vs float model                                   
+activations (rw)   :   11,424 B (11.16 KiB) (1 segment) *                                                                        
+ram (total)        :   11,424 B (11.16 KiB) = 11,424 + 0 + 0                                                                     
+---------------------------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - cat_sound_classification_model ['input_0'] ['dense_2']
+------ ------------------------------- ----------------- ------------------- --------- --------------- --- --------------------- ------------------- ----------------------------- 
+m_id   layer (type,original)           oshape            param/size               macc    connected to   | c_size                c_macc              c_type                        
+------ ------------------------------- ----------------- ------------------- --------- --------------- --- --------------------- ------------------- ----------------------------- 
+0      input_0 (Input, None)           [b:None,c:2600]                                                   | +333,888(+100.0%)     +666,112(+100.0%)   dense_wc4of32/nl_of32[0, 1]   
+       dense_dense (Dense, Dense)      [b:None,c:256]    665,856/2,663,424     665,856         input_0   | -2,663,424(-100.0%)   -665,856(-100.0%)   
+       dense (Nonlinearity, Dense)     [b:None,c:256]                              256     dense_dense   |                       -256(-100.0%)       
+------ ------------------------------- ----------------- ------------------- --------- --------------- --- --------------------- ------------------- ----------------------------- 
+1      dense_1_dense (Dense, Dense)    [b:None,c:128]    32,896/131,584         32,896           dense   | -114,624(-87.1%)      +128(+0.4%)         dense_wc4of32/nl_of32[2, 3]   
+       dense_1 (Nonlinearity, Dense)   [b:None,c:128]                              128   dense_1_dense   |                       -128(-100.0%)       
+------ ------------------------------- ----------------- ------------------- --------- --------------- --- --------------------- ------------------- ----------------------------- 
+2      dense_2_dense (Dense, Dense)    [b:None,c:10]     1,290/5,160             1,290         dense_1   |                       +150(+11.6%)        dense_of32/nl_of32[o][4, 5]   
+       dense_2 (Nonlinearity, Dense)   [b:None,c:10]                               150   dense_2_dense   |                       -150(-100.0%)       
+------ ------------------------------- ----------------- ------------------- --------- --------------- --- --------------------- ------------------- ----------------------------- 
+model/c-model: macc=700,576/700,576  weights=2,800,168/356,008 -2,444,160(-87.3%) activations=--/11,424 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : cat_sound_classification_model
+c-name                : cat_sound_cls
+c-node #              : 6
+c-array #             : 13
+activations size      : 11424 (1 segment)
+weights size          : 356008 (6 segments)
+macc                  : 700576
+inputs                : ['input_0_output']
+outputs               : ['dense_2_output']
+
+C-Arrays (13)
+------ ----------------------- --------------- ------------------------------- ------------- ----------- --------- 
+c_id   name (*_array)          item/size       domain/mem-pool                 c-type        fmt         comment   
+------ ----------------------- --------------- ------------------------------- ------------- ----------- --------- 
+0      dense_2_output          10/40           activations/**default**         float         float32     /output   
+1      dense_dense_weights     665600/332864   weights/dense_dense_weights     const float   c4 (LUT4)             
+2      dense_dense_bias        256/1024        weights/dense_dense_bias        const float   float32               
+3      dense_1_dense_weights   32768/16448     weights/dense_1_dense_weights   const float   c4 (LUT4)             
+4      dense_1_dense_bias      128/512         weights/dense_1_dense_bias      const float   float32               
+5      dense_2_dense_weights   1280/5120       weights/dense_2_dense_weights   const float   float32               
+6      dense_2_dense_bias      10/40           weights/dense_2_dense_bias      const float   float32               
+7      input_0_output          2600/10400      activations/**default**         float         float32     /input    
+8      dense_dense_output      256/1024        activations/**default**         float         float32               
+9      dense_output            256/1024        activations/**default**         float         float32               
+10     dense_1_dense_output    128/512         activations/**default**         float         float32               
+11     dense_1_output          128/512         activations/**default**         float         float32               
+12     dense_2_dense_output    10/40           activations/**default**         float         float32               
+------ ----------------------- --------------- ------------------------------- ------------- ----------- --------- 
+
+C-Layers (6)
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+c_id   name (*_layer)   id   layer_type   macc     rom      tensors                    shape (array id)   
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+0      dense_dense      0    dense        665856   333888   I: input_0_output          (1,2600) (7)       
+                                                            W: dense_dense_weights     (2600,256) (1)     
+                                                            W: dense_dense_bias        (256,) (2)         
+                                                            O: dense_dense_output      (1,256) (8)        
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+1      dense            0    nl           256      0        I: dense_dense_output      (1,256) (8)        
+                                                            O: dense_output            (1,256) (9)        
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+2      dense_1_dense    1    dense        32896    16960    I: dense_output            (1,256) (9)        
+                                                            W: dense_1_dense_weights   (256,128) (3)      
+                                                            W: dense_1_dense_bias      (128,) (4)         
+                                                            O: dense_1_dense_output    (1,128) (10)       
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+3      dense_1          1    nl           128      0        I: dense_1_dense_output    (1,128) (10)       
+                                                            O: dense_1_output          (1,128) (11)       
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+4      dense_2_dense    2    dense        1290     5160     I: dense_1_output          (1,128) (11)       
+                                                            W: dense_2_dense_weights   (128,10) (5)       
+                                                            W: dense_2_dense_bias      (10,) (6)          
+                                                            O: dense_2_dense_output    (1,10) (12)        
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+5      dense_2          2    nl           150      0        I: dense_2_dense_output    (1,10) (12)        
+                                                            O: dense_2_output          (1,10) (0)         
+------ ---------------- ---- ------------ -------- -------- -------------------------- ------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ ----------------------- --------- ---------------- --------- ---------- 
+c_id    m_id   name (type)                   #op             type    #param   sparsity 
+------- ------ ----------------------- --------- ---------------- --------- ---------- 
+0       0      dense_dense (dense)       665,856   smul_f32_f32c4   665,856     0.0082 
+1       0      dense (nl)                    256       op_f32_f32           
+2       1      dense_1_dense (dense)      32,896   smul_f32_f32c4    32,896     0.0141 
+3       1      dense_1 (nl)                  128       op_f32_f32           
+4       2      dense_2_dense (dense)       1,290     smul_f32_f32     1,290     0.0000 
+5       2      dense_2 (nl)                  150       op_f32_f32           
+------- ------ ----------------------- --------- ---------------- --------- ---------- 
+total                                    700,576                    700,042     0.0084 
+
+Number of operation types
+---------------- --------- ----------- 
+operation type           #           % 
+---------------- --------- ----------- 
+smul_f32_f32c4     698,752       99.7% 
+op_f32_f32             534        0.1% 
+smul_f32_f32         1,290        0.2% 
+
+Complexity report (model)
+------ --------------- ------------------------- ------------------------- -------- 
+m_id   name            c_macc                    c_rom                     c_id     
+------ --------------- ------------------------- ------------------------- -------- 
+0      input_0         ||||||||||||||||  95.1%   ||||||||||||||||  93.8%   [0, 1]   
+1      dense_1_dense   |                  4.7%   |                  4.8%   [2, 3]   
+2      dense_2_dense   |                  0.2%   |                  1.4%   [4, 5]   
+------ --------------- ------------------------- ------------------------- -------- 
+macc=700,576 weights=356,008 act=11,424 ram_io=0
+ 
+ Requested memory size per segment ("stm32f4" series)
+ ----------------------------- ------- --------- ------- -------- 
+ module                           text    rodata    data      bss 
+ ----------------------------- ------- --------- ------- -------- 
+ NetworkRuntime810_CM4_GCC.a     7,948         0       0        0 
+ cat_sound_cls.o                   584        48   1,748      168 
+ cat_sound_cls_data.o               56        48     308        0 
+ lib (toolchain)*                  712        24       0        0 
+ ----------------------------- ------- --------- ------- -------- 
+ RT total**                      9,300       120   2,056      168 
+ ----------------------------- ------- --------- ------- -------- 
+ *weights*                           0   356,008       0        0 
+ *activations*                       0         0       0   11,424 
+ *io*                                0         0       0        0 
+ ----------------------------- ------- --------- ------- -------- 
+ TOTAL                           9,300   356,128   2,056   11,592 
+ ----------------------------- ------- --------- ------- -------- 
+ *  toolchain objects (libm/libgcc*)
+ ** RT - AI runtime objects (kernels+infrastructure)
+  
+  Summary per memory device type
+  ---------------------------------------------
+  .\device       FLASH      %      RAM       % 
+  ---------------------------------------------
+  RT total      11,476   3.1%    2,224   16.3% 
+  ---------------------------------------------
+  TOTAL        367,484          13,648         
+  ---------------------------------------------
+
+
+Generated files (7)
+------------------------------------------------------------------------------ 
+/home/pansamic/.stm32cubemx/cat_sound_cls_output/cat_sound_cls_config.h        
+/home/pansamic/.stm32cubemx/cat_sound_cls_output/cat_sound_cls.h               
+/home/pansamic/.stm32cubemx/cat_sound_cls_output/cat_sound_cls.c               
+/home/pansamic/.stm32cubemx/cat_sound_cls_output/cat_sound_cls_data_params.h   
+/home/pansamic/.stm32cubemx/cat_sound_cls_output/cat_sound_cls_data_params.c   
+/home/pansamic/.stm32cubemx/cat_sound_cls_output/cat_sound_cls_data.h          
+/home/pansamic/.stm32cubemx/cat_sound_cls_output/cat_sound_cls_data.c          
