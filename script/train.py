@@ -3,7 +3,6 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from keras.models import Sequential, save_model, load_model
 from keras.layers import Dense
-import librosa
 import tensorflow as tf
 
 # Check if a GPU is available
