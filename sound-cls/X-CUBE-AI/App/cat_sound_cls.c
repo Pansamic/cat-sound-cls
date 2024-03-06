@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    cat_sound_cls.c
   * @author  AST Embedded Analytics Research Platform
-  * @date    Tue Mar  5 23:13:53 2024
+  * @date    Wed Mar  6 15:12:30 2024
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
@@ -35,14 +35,14 @@
 #define AI_NET_OBJ_INSTANCE g_cat_sound_cls
  
 #undef AI_CAT_SOUND_CLS_MODEL_SIGNATURE
-#define AI_CAT_SOUND_CLS_MODEL_SIGNATURE     "6167406c05490561d2a46334ee2cb057"
+#define AI_CAT_SOUND_CLS_MODEL_SIGNATURE     "55124f771d9f1dde485794e12f9a2483"
 
 #ifndef AI_TOOLS_REVISION_ID
 #define AI_TOOLS_REVISION_ID     ""
 #endif
 
 #undef AI_TOOLS_DATE_TIME
-#define AI_TOOLS_DATE_TIME   "Tue Mar  5 23:13:53 2024"
+#define AI_TOOLS_DATE_TIME   "Wed Mar  6 15:12:30 2024"
 
 #undef AI_TOOLS_COMPILE_TIME
 #define AI_TOOLS_COMPILE_TIME    __DATE__ " " __TIME__

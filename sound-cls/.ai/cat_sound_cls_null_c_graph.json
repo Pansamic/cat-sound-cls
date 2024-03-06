@@ -20,9 +20,9 @@
                 ]
             },
             "weight_sparsity": [
-                0.00818645472895041,
+                0.003011161572472165,
                 665856,
-                5451
+                2005
             ],
             "layer_type": "dense",
             "m_id": 0
@@ -69,9 +69,9 @@
                 ]
             },
             "weight_sparsity": [
-                0.014105058365758705,
+                0.030125243190661455,
                 32896,
-                464
+                991
             ],
             "layer_type": "dense",
             "m_id": 1
@@ -204,7 +204,7 @@
                 ],
                 "name": "dense_dense_weights"
             }],
-            "zeros": 5451,
+            "zeros": 2005,
             "raw_fmt": "(LUT_FLOAT, 4 bit, C Size: 4 bits)",
             "c_mem_pool": "dense_dense_weights",
             "padded": true,
@@ -249,7 +249,7 @@
                 ],
                 "name": "dense_1_dense_weights"
             }],
-            "zeros": 464,
+            "zeros": 991,
             "raw_fmt": "(LUT_FLOAT, 4 bit, C Size: 4 bits)",
             "c_mem_pool": "dense_1_dense_weights",
             "padded": true,
@@ -467,7 +467,7 @@
         }
     ],
     "c_activations_count": 1,
-    "date_time": "Tue Mar  5 23:13:53 2024",
+    "date_time": "Wed Mar  6 15:12:30 2024",
     "model_name": "cat_sound_classification_model",
     "tool_version": {
         "major": 1,
@@ -613,7 +613,7 @@
         "minor": 5,
         "micro": 0
     },
-    "model_signature": "6167406c05490561d2a46334ee2cb057",
+    "model_signature": "55124f771d9f1dde485794e12f9a2483",
     "params_alignment": 4,
     "activations": {"heap_overlay_pool": {
         "buffer_data_size": 0,

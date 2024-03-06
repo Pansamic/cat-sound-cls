@@ -101,7 +101,7 @@ int main(void)
   {
 	  input[i] = 3.14+0.54*cosf((float)i);
   }
-  W25qxx_WritePage((uindt8_t*)input, 0, 0, 256);
+  W25qxx_WritePage((uint8_t*)input, 0, 0, 256);
   W25qxx_ReadBytes((uint8_t*)output, 0, 256);
   memset(output, 0, sizeof(output));
   W25qxx_ReadPage((uint8_t*)output, 0, 0, 256);

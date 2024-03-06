@@ -1,32 +1,32 @@
 Neural Network Tools for STM32 family v1.7.0 (stm.ai v8.1.0-19520)
-Created date          : 2024-03-05 23:13:53
-Parameters            : generate --name cat_sound_cls -m /home/pansamic/Develop/Machine-Learning/cat-sound-classification-v1.1/cat_sound_classification_model.h5 --type keras --compression medium --verbosity 1 --workspace /tmp/mxAI_workspace456472392215774335176372330016430 --output /home/pansamic/.stm32cubemx/cat_sound_cls_output --allocate-inputs --series stm32f4 --allocate-outputs --split-weights
+Created date          : 2024-03-06 15:12:30
+Parameters            : generate --name cat_sound_cls -m /home/pansamic/Develop/Machine-Learning/cat-sound-cls/cat_sound_classification_model.h5 --type keras --compression medium --verbosity 1 --workspace /tmp/mxAI_workspace654710575370813036855875521082457 --output /home/pansamic/.stm32cubemx/cat_sound_cls_output --allocate-inputs --series stm32f4 --allocate-outputs --split-weights
 
 Exec/report summary (generate)
----------------------------------------------------------------------------------------------------------------------------------
-model file         :   /home/pansamic/Develop/Machine-Learning/cat-sound-classification-v1.1/cat_sound_classification_model.h5   
-type               :   keras                                                                                                     
-c_name             :   cat_sound_cls                                                                                             
-compression        :   medium                                                                                                    
-options            :   allocate-inputs, allocate-outputs, split-weights                                                          
-optimization       :   balanced                                                                                                  
-target/series      :   stm32f4                                                                                                   
-workspace dir      :   /tmp/mxAI_workspace456472392215774335176372330016430                                                      
-output dir         :   /home/pansamic/.stm32cubemx/cat_sound_cls_output                                                          
-model_fmt          :   float                                                                                                     
-model_name         :   cat_sound_classification_model                                                                            
-model_hash         :   6167406c05490561d2a46334ee2cb057                                                                          
-params #           :   700,042 items (2.67 MiB)                                                                                  
----------------------------------------------------------------------------------------------------------------------------------
-input 1/1          :   'input_0' (domain:activations/**default**)                                                                
-                   :   2600 items, 10.16 KiB, ai_float, float, (1,2600)                                                          
-output 1/1         :   'dense_2' (domain:activations/**default**)                                                                
-                   :   10 items, 40 B, ai_float, float, (1,10)                                                                   
-macc               :   700,576                                                                                                   
-weights (ro)       :   356,008 B (347.66 KiB) (6 segments) / -2,444,160(-87.3%) vs float model                                   
-activations (rw)   :   11,424 B (11.16 KiB) (1 segment) *                                                                        
-ram (total)        :   11,424 B (11.16 KiB) = 11,424 + 0 + 0                                                                     
----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------
+model file         :   /home/pansamic/Develop/Machine-Learning/cat-sound-cls/cat_sound_classification_model.h5   
+type               :   keras                                                                                     
+c_name             :   cat_sound_cls                                                                             
+compression        :   medium                                                                                    
+options            :   allocate-inputs, allocate-outputs, split-weights                                          
+optimization       :   balanced                                                                                  
+target/series      :   stm32f4                                                                                   
+workspace dir      :   /tmp/mxAI_workspace654710575370813036855875521082457                                      
+output dir         :   /home/pansamic/.stm32cubemx/cat_sound_cls_output                                          
+model_fmt          :   float                                                                                     
+model_name         :   cat_sound_classification_model                                                            
+model_hash         :   55124f771d9f1dde485794e12f9a2483                                                          
+params #           :   700,042 items (2.67 MiB)                                                                  
+-----------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_0' (domain:activations/**default**)                                                
+                   :   2600 items, 10.16 KiB, ai_float, float, (1,2600)                                          
+output 1/1         :   'dense_2' (domain:activations/**default**)                                                
+                   :   10 items, 40 B, ai_float, float, (1,10)                                                   
+macc               :   700,576                                                                                   
+weights (ro)       :   356,008 B (347.66 KiB) (6 segments) / -2,444,160(-87.3%) vs float model                   
+activations (rw)   :   11,424 B (11.16 KiB) (1 segment) *                                                        
+ram (total)        :   11,424 B (11.16 KiB) = 11,424 + 0 + 0                                                     
+-----------------------------------------------------------------------------------------------------------------
 (*) 'input'/'output' buffers can be used from the activations buffer
 
 Model name - cat_sound_classification_model ['input_0'] ['dense_2']
@@ -113,14 +113,14 @@ Number of operations per c-layer
 ------- ------ ----------------------- --------- ---------------- --------- ---------- 
 c_id    m_id   name (type)                   #op             type    #param   sparsity 
 ------- ------ ----------------------- --------- ---------------- --------- ---------- 
-0       0      dense_dense (dense)       665,856   smul_f32_f32c4   665,856     0.0082 
+0       0      dense_dense (dense)       665,856   smul_f32_f32c4   665,856     0.0030 
 1       0      dense (nl)                    256       op_f32_f32           
-2       1      dense_1_dense (dense)      32,896   smul_f32_f32c4    32,896     0.0141 
+2       1      dense_1_dense (dense)      32,896   smul_f32_f32c4    32,896     0.0301 
 3       1      dense_1 (nl)                  128       op_f32_f32           
 4       2      dense_2_dense (dense)       1,290     smul_f32_f32     1,290     0.0000 
 5       2      dense_2 (nl)                  150       op_f32_f32           
 ------- ------ ----------------------- --------- ---------------- --------- ---------- 
-total                                    700,576                    700,042     0.0084 
+total                                    700,576                    700,042     0.0043 
 
 Number of operation types
 ---------------- --------- ----------- 
