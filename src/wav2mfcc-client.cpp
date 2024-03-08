@@ -1,5 +1,5 @@
 /**
- * @file mfcc.cc
+ * @file mfcc.cpp
  * @author pansamic (pansamic@foxmail.com)
  * @brief 
  * @version 0.1
@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
     USAGE += "  -b, --baud\t\tBaud rate\n";
     USAGE += "  -p, --path\t\twork path, including 'audio' folder\n";
     USAGE += "USAGE EXAMPLES:\n";
-    USAGE += "  wav2mfcc-client -d /dev/ttyUSB0 -b 115200 -p /home/user/sound-cls\n";
+    USAGE += "  wav2mfcc-client -d /dev/ttyACM0 -b 115200 -p /home/user/sound-cls\n";
 
     char **help = std::find(argv, argv+argc, "-h");
     if(help != argv+argc || std::find(argv, argv+argc, "--help") != argv+argc)
