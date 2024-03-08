@@ -1,0 +1,14 @@
+{
+    "cortex-debug.armToolchainPath": "",
+    "cortex-debug.gdbPath": "arm-none-eabi-gdb",
+    "cortex-debug.openocdPath": "openocd",
+    "cortex-debug.variableUseNaturalFormat": false,
+    "files.associations": {
+        "lcd.h": "c",
+        "complex.h": "c",
+        "stdint.h": "c",
+        "w25qxx.h": "c",
+        "ai_platform.h": "c",
+        "usbd_cdc_if.h": "c"
+    },
+}

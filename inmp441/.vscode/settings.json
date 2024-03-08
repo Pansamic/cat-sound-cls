@@ -1,0 +1,6 @@
+{
+    "cortex-debug.armToolchainPath": "",
+    "cortex-debug.gdbPath": "arm-none-eabi-gdb",
+    "cortex-debug.openocdPath": "openocd",
+    "cortex-debug.variableUseNaturalFormat": true
+}
