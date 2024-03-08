@@ -64,11 +64,6 @@ if not np.all(np.isfinite(train_files)):
     # Replace infinite values with a finite number, such as the maximum finite value in the data
     max_finite_value = 32768.0
     train_files[~np.isfinite(train_files)] = max_finite_value
-train_files_scaled = scaler.fit_transform(train_files.reshape(-1, INPUT_SIZE))
-test_files_scaled = scaler.transform(test_files.reshape(-1, INPUT_SIZE))
-
-print(train_files_scaled.shape)
-print(train_labels_encoded.shape)
 
 # Create a Keras model with three dense layers and softmax activation
 model = Sequential()
@@ -81,19 +76,16 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam', metrics=['accuracy'])
 
 # Train the model
-model.fit(train_files_scaled, train_labels_encoded,
+model.fit(train_files, train_labels_encoded,
           epochs=100, batch_size=32, validation_split=0.2)
 
 # Evaluate the model on the testing data
-test_loss, test_accuracy = model.evaluate(test_files_scaled, test_labels_encoded)
+test_loss, test_accuracy = model.evaluate(test_files, test_labels_encoded)
 print(f"Test accuracy: {test_accuracy}")
 
 # Save the trained model to a file
-save_model(model, MODEL_FILE)
+model.save(MODEL_FILE)
 print(f"Model saved to {MODEL_FILE}")
-
-# Load the model from the file
-loaded_model = load_model(MODEL_FILE)
 
 # Use the loaded model to predict new samples
 for breed in BREEDS:
@@ -106,6 +98,6 @@ for breed in BREEDS:
         fin.close()
         if features is not None:
             features = np.expand_dims(features, axis=0)
-            prediction = loaded_model.predict(features)[0]
+            prediction = model.predict(features)[0]
             predicted_breed = label_encoder.inverse_transform([np.argmax(prediction)])
             print(f"File {filename} is predicted to be a {predicted_breed[0]}")

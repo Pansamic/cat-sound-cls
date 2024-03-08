@@ -20,9 +20,9 @@
                 ]
             },
             "weight_sparsity": [
-                0.003011161572472165,
+                2.087538446751136E-4,
                 665856,
-                2005
+                139
             ],
             "layer_type": "dense",
             "m_id": 0
@@ -69,9 +69,9 @@
                 ]
             },
             "weight_sparsity": [
-                0.030125243190661455,
+                0.041372811284046684,
                 32896,
-                991
+                1361
             ],
             "layer_type": "dense",
             "m_id": 1
@@ -204,7 +204,7 @@
                 ],
                 "name": "dense_dense_weights"
             }],
-            "zeros": 2005,
+            "zeros": 35,
             "raw_fmt": "(LUT_FLOAT, 4 bit, C Size: 4 bits)",
             "c_mem_pool": "dense_dense_weights",
             "padded": true,
@@ -225,7 +225,7 @@
                 "shape": [256],
                 "name": "dense_dense_bias"
             }],
-            "zeros": 0,
+            "zeros": 104,
             "raw_fmt": "(FLOAT, 32 bit, C Size: 32 bits)",
             "c_mem_pool": "dense_dense_bias",
             "padded": true,
@@ -249,7 +249,7 @@
                 ],
                 "name": "dense_1_dense_weights"
             }],
-            "zeros": 991,
+            "zeros": 1344,
             "raw_fmt": "(LUT_FLOAT, 4 bit, C Size: 4 bits)",
             "c_mem_pool": "dense_1_dense_weights",
             "padded": true,
@@ -270,7 +270,7 @@
                 "shape": [128],
                 "name": "dense_1_dense_bias"
             }],
-            "zeros": 0,
+            "zeros": 17,
             "raw_fmt": "(FLOAT, 32 bit, C Size: 32 bits)",
             "c_mem_pool": "dense_1_dense_bias",
             "padded": true,
@@ -467,7 +467,7 @@
         }
     ],
     "c_activations_count": 1,
-    "date_time": "Wed Mar  6 15:12:30 2024",
+    "date_time": "Thu Mar  7 20:09:30 2024",
     "model_name": "cat_sound_classification_model",
     "tool_version": {
         "major": 1,
@@ -613,7 +613,7 @@
         "minor": 5,
         "micro": 0
     },
-    "model_signature": "55124f771d9f1dde485794e12f9a2483",
+    "model_signature": "38b1058deae20f2a27cbe664c41152ef",
     "params_alignment": 4,
     "activations": {"heap_overlay_pool": {
         "buffer_data_size": 0,

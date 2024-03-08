@@ -59,6 +59,17 @@ set(SRC_AI
 	X-CUBE-AI/App/cat_sound_cls.c
 )
 
+set(SRC_USBD
+	USB_DEVICE/App/usb_device.c
+	USB_DEVICE/App/usbd_cdc_if.c
+	USB_DEVICE/App/usbd_desc.c
+	USB_DEVICE/Target/usbd_conf.c
+	Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
+	Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
+	Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
+	Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
+)
+
 set(SRC_DRIVER
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c
@@ -71,6 +82,8 @@ set(SRC_DRIVER
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s_ex.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c
+	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c
+	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
@@ -81,6 +94,7 @@ set(SRC_DRIVER
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
 	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fsmc.c
+	Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c
 )
 
 set(PROJECT_DEFINES
@@ -113,7 +127,7 @@ set(CMAKE_TOOLCHAIN_FILE "gcc-arm-none-eabi.cmake")
 ################## PROJECT SETUP ######################################
 project(${PROJECT_NAME} C CXX ASM)
 
-add_executable(${PROJECT_NAME} ${SRC_CORE} ${SRC_AI} ${SRC_DRIVER})
+add_executable(${PROJECT_NAME} ${SRC_CORE} ${SRC_AI} ${SRC_USBD} ${SRC_DRIVER})
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${PROJECT_NAME}>)
 
 add_compile_definitions(${PROJECT_DEFINES})
@@ -128,7 +142,7 @@ set (CMAKE_STATIC_LIBRARY_SUFFIX ".a")
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
 	set (CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -O3")
 else()
-	set (CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Og -g3 -ggdb")
+	set (CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -O0 -g3 -ggdb")
 endif()
 set (CMAKE_EXE_LINKER_FLAGS "-T${LINKER_SCRIPT} ${RUNTIME_LIBRARY_SYSCALLS} -Wl,-Map=${PROJECT_NAME}.map -Wl,--gc-sections -static -Wl,--start-group -lc -lm -Wl,--end-group")
 set (CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")

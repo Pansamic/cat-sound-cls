@@ -1,13 +1,21 @@
 cmake_minimum_required(VERSION 3.8)
-project(wav2mfcc-client)
+project(cat-sound-cls)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(${PROJECT_NAME}
+add_executable(wav2mfcc-client
     src/list_ports_linux.cc
-    src/main.cpp
+    src/wav2mfcc-client.cpp
     src/serial.cc
     src/unix.cc
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+add_executable(wav-monitor
+    src/list_ports_linux.cc
+    src/monitor.cpp
+    src/serial.cc
+    src/unix.cc
+)
+
+target_include_directories(wav2mfcc-client PRIVATE include)
+target_include_directories(wav-monitor PRIVATE include)

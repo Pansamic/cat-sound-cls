@@ -1,7 +1,7 @@
 {
     "_allocate_inputs": 4,
     "_allocate_outputs": 4,
-    "cli_parameters": "generate --name cat_sound_cls -m /home/pansamic/Develop/Machine-Learning/cat-sound-cls/cat_sound_classification_model.h5 --type keras --compression medium --verbosity 1 --workspace /tmp/mxAI_workspace654710575370813036855875521082457 --output /home/pansamic/.stm32cubemx/cat_sound_cls_output --allocate-inputs --series stm32f4 --allocate-outputs --split-weights",
+    "cli_parameters": "generate --name cat_sound_cls -m /home/pansamic/Develop/Machine-Learning/cat-sound-cls/cat_sound_classification_model.h5 --type keras --compression medium --verbosity 1 --workspace /tmp/mxAI_workspace3601538505962012787790279029502625 --output /home/pansamic/.stm32cubemx/cat_sound_cls_output --allocate-inputs --series stm32f4 --allocate-outputs --split-weights",
     "cli_version": {
         "major": 1,
         "micro": 0,
@@ -16,12 +16,12 @@
             "dense_dense_weights": 8.0
         }
     },
-    "date_time": "Wed Mar  6 15:12:30 2024",
+    "date_time": "Thu Mar  7 20:09:30 2024",
     "error": 0,
     "error_str": [],
     "exec_cmd": "generate",
     "exec_duration": 0.0,
-    "hash": "55124f771d9f1dde485794e12f9a2483",
+    "hash": "38b1058deae20f2a27cbe664c41152ef",
     "inputs": [
         "input_0"
     ],

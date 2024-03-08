@@ -46,7 +46,7 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 uint8_t audio_buf_1[4096];
 uint8_t audio_buf_2[4096];
-float mfccs[NUM_MFCC];
+float mfccs[MFCC_CNT_PER_FRAME];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,9 +105,9 @@ int main(void)
       *(((float*)audio_buf_2)+i) = (float)*(((int16_t*)audio_buf_1)+i);
     }
     memset(audio_buf_1, 0, sizeof(audio_buf_1));
-    memset(mfccs, 0, NUM_MFCC*sizeof(float));
-    audio_get_mfcc((float*)audio_buf_2, (float*)audio_buf_1, mfccs, NUM_MFCC);
-    HAL_UART_Transmit(&huart1, (uint8_t*)mfccs, NUM_MFCC*sizeof(float), HAL_MAX_DELAY);
+    memset(mfccs, 0, MFCC_CNT_PER_FRAME*sizeof(float));
+    audio_get_mfcc((float*)audio_buf_2, (float*)audio_buf_1, mfccs);
+    HAL_UART_Transmit(&huart1, (uint8_t*)mfccs, MFCC_CNT_PER_FRAME*sizeof(float), HAL_MAX_DELAY);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

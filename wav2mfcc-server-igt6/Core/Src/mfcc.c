@@ -27,7 +27,7 @@
 /*************************************************************/
 /*                        VARIABLE                           */
 /*************************************************************/
-float hamming_window[FRAME_SIZE] = {
+const float hamming_window[FRAME_SIZE] = {
 0.076720, 0.076729, 0.076755, 0.076798, 0.076859, 0.076938, 0.077033, 0.077147, 0.077277, 0.077425, 0.077590, 0.077773, 0.077973, 0.078191, 0.078426, 0.078678, 0.078947, 
 0.079234, 0.079538, 0.079860, 0.080199, 0.080555, 0.080928, 0.081318, 0.081726, 0.082151, 0.082594, 0.083053, 0.083530, 0.084023, 0.084534, 0.085062, 0.085608, 
 0.086170, 0.086749, 0.087345, 0.087959, 0.088589, 0.089236, 0.089901, 0.090582, 0.091280, 0.091995, 0.092726, 0.093475, 0.094240, 0.095022, 0.095821, 0.096637, 
@@ -95,9 +95,9 @@ float hamming_window[FRAME_SIZE] = {
 };
 
 // create the filter bank matrix
-float filter_bank[NUM_FILTERS * (FFT_SIZE / 2 + 1)];
+float filter_bank[NUM_FILTERS * (FFT_SIZE / 2 + 1)] __attribute__((section(".ccmram"))) ={0};
 // create the buffer to store the magnitude spectrum
-float mag_spectrum[FFT_SIZE / 2 + 1];
+float mag_spectrum[FFT_SIZE / 2 + 1] __attribute__((section(".ccmram"))) ={0};
 arm_rfft_fast_instance_f32 audio_fft_instance;
 arm_dct4_instance_f32 audio_dct_instance;
 arm_rfft_instance_f32 audio_rfft_instance;
@@ -107,19 +107,19 @@ float mel_spectrum[NUM_FILTERS];
 void audio_hamming_window(float* audio_src_ptr,uint32_t audio_len);
 void create_mel_filter_bank(float* filter_bank,uint16_t num_filters,uint16_t low_freq,uint16_t high_freq,uint32_t sample_rate,uint16_t fft_size);
 void audio_mel_filter(float *fft_src_ptr,uint32_t fft_len,float *mel_spectrum_ptr);
-void audio_extract_mfcc(float *mel_spec_src_ptr,uint32_t mel_spec_len,float *mfcc_ptr,uint32_t mfcc_len);
+void audio_extract_mfcc(float *mel_spec_src_ptr,uint32_t mel_spec_len,float *mfcc_ptr);
 
 /*************************************************************/
 /*                        FUNCTION                           */
 /*************************************************************/
 
-void audio_get_mfcc(float* audio_src_ptr,float* audio_dst_ptr,float* mfcc_dst_ptr, uint32_t mfcc_len)
+void audio_get_mfcc(float* audio_src_ptr,float* audio_dst_ptr,float* mfcc_dst_ptr)
 {
     memset(mel_spectrum, 0, sizeof(mel_spectrum));
     audio_hamming_window(audio_src_ptr, FRAME_SIZE);
     arm_rfft_fast_f32(&audio_fft_instance, audio_src_ptr, audio_dst_ptr, 0);
     audio_mel_filter(audio_dst_ptr, FRAME_SIZE, mel_spectrum);
-    audio_extract_mfcc(mel_spectrum,NUM_FILTERS, mfcc_dst_ptr, mfcc_len);
+    audio_extract_mfcc(mel_spectrum,NUM_FILTERS, mfcc_dst_ptr);
 }
 
 void mfcc_init(void)
@@ -241,7 +241,7 @@ void audio_mel_filter(float *fft_src_ptr, uint32_t fft_len,float *mel_spectrum_p
  */
 float mfcc[128];
 float dct_tmp[256];
-void audio_extract_mfcc(float *mel_spec_src_ptr,uint32_t mel_spec_len,float *mfcc_ptr,uint32_t mfcc_len)
+void audio_extract_mfcc(float *mel_spec_src_ptr,uint32_t mel_spec_len,float *mfcc_ptr)
 {
     memset(mfcc, 0, sizeof(mfcc));
     memset(dct_tmp, 0, sizeof(dct_tmp));
@@ -252,5 +252,5 @@ void audio_extract_mfcc(float *mel_spec_src_ptr,uint32_t mel_spec_len,float *mfc
     }
     arm_dct4_f32(&audio_dct_instance, dct_tmp, mfcc);
     // copy the desired number of MFCC to the output pointer
-    arm_copy_f32(mfcc, mfcc_ptr, mfcc_len);
+    arm_copy_f32(mfcc, mfcc_ptr, MFCC_CNT_PER_FRAME);
 }

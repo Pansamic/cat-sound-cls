@@ -20,11 +20,12 @@
 #include "main.h"
 #include "dma.h"
 #include "i2s.h"
+#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "usbd_cdc_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,9 +46,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint32_t audio[1024];
-float mfcc[4000];
-uint8_t recv_ready = 1;
+uint32_t audio_frame[1024];
+int16_t audio_raw[512*100];
+uint32_t sample_count = 0;
+uint8_t recv_ready = 0;
+uint8_t state_key = 0;
+uint8_t start = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,22 +95,36 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_I2S2_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-  // recv_ready = 0;
-  // HAL_I2S_Receive_DMA(&hi2s2, (uint16_t *)audio_buffer, 4096);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-     if (recv_ready)
-     {
-       // restart I2S receive
-       recv_ready = 0;
-       HAL_I2S_Receive_DMA(&hi2s2, (uint16_t *)audio, 4096);
-     }
-     HAL_I2S_Receive(&hi2s2, (uint16_t *)audio, 4096, HAL_MAX_DELAY);
+    if (start)
+    {
+      recv_ready = 0;
+      HAL_I2S_Receive_DMA(&hi2s2, (uint16_t *)audio_frame, sizeof(audio_frame)/sizeof(uint32_t));
+      while(recv_ready == 0);
+      for(uint16_t i=0 ; i<sizeof(audio_frame)/sizeof(uint32_t)/4 ; i++)
+      {
+        audio_raw[i+sample_count] = *(((int16_t*)audio_frame)+(i*8));
+      }
+      sample_count += sizeof(audio_frame)/sizeof(uint32_t)/4;
+      if(sample_count*sizeof(int16_t) >= sizeof(audio_raw))
+      {
+        uint32_t remaining_size = sample_count*sizeof(int16_t);
+        while(remaining_size > 0)
+        {
+          CDC_Transmit_FS(((uint8_t*)audio_raw)+(sample_count*4-remaining_size), 512);
+          remaining_size -= 512;
+    	  }
+        start = 0;
+      }
+    }
 
     /* USER CODE END WHILE */
 
@@ -164,6 +182,16 @@ void SystemClock_Config(void)
 void HAL_I2S_RxCpltCallback(I2S_HandleTypeDef *hi2s)
 {
   recv_ready = 1;
+}
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if(GPIO_Pin==KEY0_Pin)
+    {
+        if(KEY0_GPIO_Port->IDR & KEY0_Pin)
+        	start = 1;
+        else
+          start = 0;
+    }
 }
 /* USER CODE END 4 */
 

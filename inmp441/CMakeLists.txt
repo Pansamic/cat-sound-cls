@@ -64,7 +64,7 @@ file(GLOB SRC_DRIVER
 set(SOURCES
 	${SRC_CORE}
 	${SRC_DRIVER}
-	# ${SRC_USBD}
+	${SRC_USBD}
 )
 
 list(APPEND PROJECT_DEFINES
@@ -101,9 +101,9 @@ add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_SIZE}
 set (CMAKE_EXECUTABLE_SUFFIX ".elf")
 set (CMAKE_STATIC_LIBRARY_SUFFIX ".a")
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-	set (CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -O3")
+	set (CMAKE_C_FLAGS "${MCPU} -std=c99 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} ${RUNTIME_LIBRARY_SYSCALLS} -Wall -mthumb -O3")
 else()
-	set (CMAKE_C_FLAGS "${MCPU} -std=gnu11 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} -mthumb -Wall -Og -g3 -ggdb")
+	set (CMAKE_C_FLAGS "${MCPU} -std=c99 ${MFPU} ${MFLOAT_ABI} ${RUNTIME_LIBRARY} ${RUNTIME_LIBRARY_SYSCALLS} -Wall -mthumb -Og -g3 -ggdb")
 endif()
-set (CMAKE_EXE_LINKER_FLAGS "-T${LINKER_SCRIPT} ${RUNTIME_LIBRARY_SYSCALLS} -Wl,-Map=${PROJECT_NAME}.map -Wl,--gc-sections -static -Wl,--start-group -lc -lm -Wl,--end-group")
+set (CMAKE_EXE_LINKER_FLAGS "-T${LINKER_SCRIPT} -Wl,-Map=${PROJECT_NAME}.map -Wl,--gc-sections -static -Wl,--start-group -lc -lm -Wl,--end-group")
 set (CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
