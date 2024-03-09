@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Flash firmware",
+            "type": "shell",
+            "command": "openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c \"program build/systest.elf verify reset exit\"",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
