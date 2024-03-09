@@ -93,7 +93,7 @@
 extern USBD_CDC_ItfTypeDef USBD_Interface_fops_FS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
-extern ringbuf_t cdc_ringbuf;
+// extern ringbuf_t cdc_ringbuf;
 
 /* USER CODE END EXPORTED_VARIABLES */
 
@@ -109,7 +109,7 @@ extern ringbuf_t cdc_ringbuf;
 uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
 /* USER CODE BEGIN EXPORTED_FUNCTIONS */
-
+uint8_t CDC_Receive(uint8_t* dest, uint32_t size);
 /* USER CODE END EXPORTED_FUNCTIONS */
 
 /**

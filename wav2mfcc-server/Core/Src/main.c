@@ -47,7 +47,8 @@
 uint8_t audio_buf_1[4096];
 uint8_t audio_buf_2[4096];
 float mfccs[MFCC_CNT_PER_FRAME];
-extern uint8_t cdc_buf[4096];
+// extern uint8_t cdc_buf[4096];
+extern USBD_HandleTypeDef hUsbDeviceFS;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +70,7 @@ static void MX_GPIO_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  uint32_t readed=0;
+  // uint32_t readed=0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -93,14 +94,16 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
   mfcc_init();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    while(cdc_ringbuf.size < 2048){}
-    ringbuf_get_block(&cdc_ringbuf, (uint8_t*)audio_buf_1, 2048, &readed);
+    // while(cdc_ringbuf.size < 2048){}
+    // ringbuf_get_block(&cdc_ringbuf, (uint8_t*)audio_buf_1, 2048, &readed);
+    CDC_Receive(audio_buf_1, 2048);
     for(uint32_t i=0 ; i<FRAME_SIZE ; i++)
     {
       *(((float*)audio_buf_2)+i) = (float)*(((int16_t*)audio_buf_1)+i);

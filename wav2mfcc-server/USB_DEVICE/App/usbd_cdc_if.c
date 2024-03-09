@@ -50,7 +50,12 @@
   */
 
 /* USER CODE BEGIN PRIVATE_TYPES */
-
+typedef struct CDCRecvControllerTypeDef
+{
+  void * ptr;
+  uint32_t target_size;
+  uint32_t current_size;
+}CDC_RecvController;
 /* USER CODE END PRIVATE_TYPES */
 
 /**
@@ -97,8 +102,10 @@ uint8_t UserTxBufferFS[APP_TX_DATA_SIZE];
 /* USER CODE BEGIN PRIVATE_VARIABLES */
 // Line coding: Rate: 8MBits/s; CharFormat: 1 Stop bit; Parity: None; Data: 8 bits
 static uint8_t line_coding[7] = {0x00, 0x12, 0x7A, 0x00, 0x00, 0x00, 0x08};
-static uint8_t cdc_recv_buf[4096];
-ringbuf_t cdc_ringbuf;
+// static uint8_t cdc_recv_buf[4096];
+// ringbuf_t cdc_ringbuf;
+CDC_RecvController cdc_recv_controller;
+
 /* USER CODE END PRIVATE_VARIABLES */
 
 /**
@@ -159,7 +166,7 @@ static int8_t CDC_Init_FS(void)
   /* Set Application Buffers */
   USBD_CDC_SetTxBuffer(&hUsbDeviceFS, UserTxBufferFS, 0);
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, UserRxBufferFS);
-  ringbuf_init(&cdc_ringbuf, cdc_recv_buf, sizeof(cdc_recv_buf), RINGBUF_RULE_DISCARD);
+  // ringbuf_init(&cdc_ringbuf, cdc_recv_buf, sizeof(cdc_recv_buf), RINGBUF_RULE_DISCARD);
   return (USBD_OK);
   /* USER CODE END 3 */
 }
@@ -267,9 +274,15 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
-  USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
-  ringbuf_write_block(&cdc_ringbuf, Buf, *Len);
-  USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  uint32_t remaining_size = cdc_recv_controller.target_size - cdc_recv_controller.current_size;
+  uint32_t written_size = remaining_size > *Len ? *Len : remaining_size;
+  memcpy(cdc_recv_controller.ptr, Buf, written_size);
+  cdc_recv_controller.current_size += written_size;
+  if(cdc_recv_controller.current_size < cdc_recv_controller.target_size)
+  {
+    USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
+    USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  }
   return (USBD_OK);
   /* USER CODE END 6 */
 }
@@ -321,7 +334,16 @@ static int8_t CDC_TransmitCplt_FS(uint8_t *Buf, uint32_t *Len, uint8_t epnum)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
-
+uint8_t CDC_Receive(uint8_t* dest, uint32_t size)
+{
+  cdc_recv_controller.ptr = dest;
+  cdc_recv_controller.target_size = size;
+  cdc_recv_controller.current_size = 0;
+  USBD_CDC_SetRxBuffer(&hUsbDeviceFS, UserRxBufferFS);
+  USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  while(cdc_recv_controller.current_size < cdc_recv_controller.target_size){}
+  return (USBD_OK);
+}
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
 /**
