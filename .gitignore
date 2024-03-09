@@ -1,4 +1,13 @@
-**/build
-.vscode
-**/Debug
-**/Release
+build
+/.vscode
+Debug
+Release
+/mfcc
+/raw
+/mfccfig
+/wavefig
+/audio.wav
+/audio.txt
+/validation_output.txt
+/validation.npy
+/cat_sound_calssification_model.h5

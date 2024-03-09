@@ -1,5 +1,7 @@
 # cat sound classification training model
 
+Software stack pipeline for cat sound classification evaluation board with STM32F407ZGT6, compatible with Geehy APM32F407ZGT6(C2 version).
+
 ## prerequisite
 
 Install dependencies and toolchains.
@@ -29,15 +31,19 @@ make -j
 openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c "program sound-cls.elf verify reset exit"
 ```
 
+## hardware examination
+
+Use code under folders `inmp441`, `st7789`, `w25q128` to exam the hardware. 
+
 ## generate mfcc from wav audio
 
 First compile and flash wav2mfcc-server firmware of MCU.
-This code is for STM32F407IGT6 or APM32F407IGT6.
-Connect USART1(PA9 & PA10) to your PC. A TTL-USB converter is needed.
+This code is for STM32F407ZGT6 or APM32F407ZGT6.
+Connect USB port to your PC. wav2mfcc-server software uses USB FS CDC VCP to simulate a serial port.
 
 ```bash
 # compile MCU firmware
-cd wav2mfcc-server-igt6
+cd wav2mfcc-server
 mkdir build
 cd build
 cmake ..

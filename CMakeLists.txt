@@ -10,12 +10,18 @@ add_executable(wav2mfcc-client
     src/unix.cc
 )
 
-add_executable(wav-monitor
+add_executable(systest
     src/list_ports_linux.cc
-    src/monitor.cpp
+    src/systest.cpp
     src/serial.cc
     src/unix.cc
 )
 
 target_include_directories(wav2mfcc-client PRIVATE include)
-target_include_directories(wav-monitor PRIVATE include)
+target_include_directories(systest PRIVATE include)
+
+if(CMAKE_BUILD_TYPE EQUAL Debug)
+    add_compile_options(-Wall -O0 -g3 -ggdb)
+else()
+    add_compile_options(-Wall -O2)
+endif()
