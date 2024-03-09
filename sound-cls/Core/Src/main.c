@@ -341,25 +341,25 @@ void process_audio(void)
 }
 uint8_t get_network_result(float *arr, uint8_t size)
 {
-  //   // Check if the array is empty
-  //   if (size == 0)
-  //       return -1; // Return -1 to indicate an error
+    // Check if the array is empty
+    if (size == 0)
+        return -1; // Return -1 to indicate an error
     
-  //   // Initialize the max value and index to the first element
-  //   float max = arr[0];
-  //   uint8_t max_idx = 0;
-  //   // Loop through the rest of the array
-  //   for (uint8_t i = 1; i < size; i++)
-  //   {
-  //       // If the current element is greater than the max value
-  //       if (arr[i] > max)
-  //       {
-  //           // Update the max value and index
-  //           max = arr[i];
-  //           max_idx = i;
-  //       }
-  // }
-  // // Return the max index
+    // Initialize the max value and index to the first element
+    float max = arr[0];
+    uint8_t max_idx = 0;
+    // Loop through the rest of the array
+    for (uint8_t i = 1; i < size; i++)
+    {
+        // If the current element is greater than the max value
+        if (arr[i] > max)
+        {
+            // Update the max value and index
+            max = arr[i];
+            max_idx = i;
+        }
+  }
+  // Return the max index
   // return max_idx;
   return rand()%10;
 }

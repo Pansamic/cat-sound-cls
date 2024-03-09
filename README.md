@@ -55,7 +55,7 @@ mkdir build && cd build
 cmake ..
 make -j
 # replace "/path/to/this/repo" with true path. full path is required.
-./wa2v2mfcc-client -d /dev/ttyACM0 -b 921600 -p /path/to/this/repo
+./wa2v2mfcc-client -d /dev/ttyACM0 -b 921600 -p ../
 ```
 
 ## validate data

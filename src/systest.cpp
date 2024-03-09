@@ -64,7 +64,7 @@ public:
     {
         char header[44];
         uint16_t channels = 1; // number of channels
-        uint32_t sample_rate = 44100; // sample rate
+        uint32_t sample_rate = 22050; // sample rate
         uint16_t bits_per_sample = 16; // bits per sample
         uint32_t bytes_per_sample = bits_per_sample / 8;
         uint32_t data_size = size * bytes_per_sample;
