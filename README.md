@@ -31,10 +31,6 @@ make -j
 openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c "program sound-cls.elf verify reset exit"
 ```
 
-## hardware examination
-
-Use code under folders `inmp441`, `st7789`, `w25q128` to exam the hardware. 
-
 ## generate mfcc from wav audio
 
 First compile and flash wav2mfcc-server firmware of MCU.
@@ -81,6 +77,29 @@ After generating MFCC parameters, you can train yhe models.
 Use `script/train.py` to train model as default option. You can rewrite train.py to fit your data.
 
 A saved model file `cat_sound_classification_model.h5` will appear at root path of this repo.
+
+
+## evaluation board examination
+
+First compile and flash test firmware to evaluation board.
+
+```bash
+cd systest
+mkdir build && cd build
+cmake .. && make -j
+openocd -f interface/stlink,cfg -f target/stm32f5x.cfg -c "program systest.elf verify reset exit"
+```
+
+then connect evaluation board and PC with linux PC with USB cable.
+start examination program on PC.
+
+```bash
+cd build
+cmake ..
+make -j
+./systest -d /dev/ttyACM0 -p ../
+```
+
 
 ## deploy model on MCU
 
